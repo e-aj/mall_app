@@ -1,0 +1,15 @@
+#app,body,html{
+  margin: 0;
+  padding: 0;
+}
+ul,li{
+  display: inline-block;
+}
+
+li{
+  list-style: none;
+}
+a{
+  color: #000;
+  
+}
