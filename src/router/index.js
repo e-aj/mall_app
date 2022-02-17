@@ -1,8 +1,9 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory,createWebHistory } from 'vue-router'
 
 const routes = [
     {
         path: '/',
+        redirect: '/index',
         name: 'Home',
         component: import('../views/Home/home.vue'),
         children: [
@@ -27,11 +28,21 @@ const routes = [
                 component: import('../views/Mine/index.vue')
             },
         ]
+    },
+    {
+        path: '/login',
+        name: 'login',
+        component: import('../views/Login/login.vue')
+    },
+    {
+        path:'/register',
+        name:'register',
+        component:import("../views/Login/register.vue")
     }
 ]
 
 const router = createRouter({
-    history: createWebHashHistory(),
+    history:createWebHistory(),
     linkActiveClass: 'active',
     routes
 })

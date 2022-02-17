@@ -3,7 +3,7 @@
         <router-view></router-view>
         <div class="nav">
             <ul>
-                <router-link to="index" class="link">
+                <router-link to="/index"  class="link" >
                     <van-icon name="wap-home-o" />
                     <span>首页</span>
                 </router-link>
@@ -33,10 +33,14 @@ export default {
 <style lang="less" scoped>
 .home {
     .nav {
+        background: #fff;
         position: fixed;
         bottom: 0;
         width: 100%;
+        border: 1px solid #F5F6F8;
+        z-index: 9;
         ul {
+            margin: 5px 0;
             display: flex;
             justify-content: space-between;
             .link {
