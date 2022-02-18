@@ -1,17 +1,17 @@
 <template>
   <div class="index">
     <!-- head -->
-    <div class="head">
-      <van-icon name="wap-nav" color="#1baeae" class="kind" />
+    <div class="head" :class="{ 'active': state.headerScroll }">
+      <van-icon name="wap-nav" :color="state.icon_color" class="kind" />
       <div class="search">
         <div class="first">XX商城</div>
         <div class="second"></div>
         <div class="third">山河无恙，人间皆安</div>
       </div>
-      <van-icon name="manager" color="#1baeae" />
+      <van-icon name="manager" :color="state.icon_color" />
     </div>
     <!-- swiper -->
-    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+    <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" ref="el">
       <van-swipe-item v-for="(item, index) in state.swipeList" :key="index">
         <img :src="item.carouselUrl" alt />
       </van-swipe-item>
@@ -61,7 +61,7 @@
 
 
 <script setup>
-import { reactive } from "vue";
+import { onMounted, onUnmounted, reactive, ref, nextTick } from "vue";
 import { getHome } from '../../api/index'
 
 const state = reactive({
@@ -111,7 +111,9 @@ const state = reactive({
   ],
   newGoodses: [],
   hotGoodses: [],
-  recommendGoodses: []
+  recommendGoodses: [],
+  headerScroll: false,
+  icon_color:'#1baeae'
 })
 getHome().then(res => {
   console.log(res)
@@ -119,6 +121,17 @@ getHome().then(res => {
   state.newGoodses = res.data.data.newGoodses,
     state.hotGoodses = res.data.data.hotGoodses,
     state.recommendGoodses = res.data.data.recommendGoodses
+})
+
+const el = ref(null)
+
+nextTick(() => {
+  window.addEventListener('scroll', () => {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+    scrollTop > 100 ? state.headerScroll = true : state.headerScroll = false
+    scrollTop > 100 ? state.icon_color = '#fff' : state.icon_color = '#1baeae'
+
+  })
 })
 
 </script>
@@ -151,14 +164,22 @@ getHome().then(res => {
         font-weight: bold;
         color: #1baeae;
       }
-      .second{
+      .second {
         width: 1px;
         height: 20px;
         background: #000;
         margin-top: 6px;
       }
-      .third{
+      .third {
         font-size: 14px;
+      }
+    }
+  }
+  .active {
+    background-color: #1baeae;
+    .search {
+      .first {
+        color: #1baeae;
       }
     }
   }
@@ -190,5 +211,8 @@ getHome().then(res => {
       }
     }
   }
+}
+.headerScroll {
+  background: #000;
 }
 </style>

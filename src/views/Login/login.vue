@@ -33,7 +33,7 @@
                 
                 </van-field>
                 <div class="register">
-                    <span>立即注册</span>
+                    <span @click="register">立即注册</span>
                 </div>
             </van-cell-group>
 
@@ -55,6 +55,9 @@ const form = reactive({
 })
 const onSubmit = () => {
     router.push('/index')
+}
+const register = () =>{
+    router.push('/register')
 }
 
 </script>
