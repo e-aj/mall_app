@@ -28,9 +28,8 @@
                     :rules="[{ required: true, message: '请输入验证码' }]"
                 >
                     <div>
-                        <img src="" alt="">
+                        <img src alt />
                     </div>
-                
                 </van-field>
                 <div class="register">
                     <span @click="register">立即注册</span>
@@ -47,19 +46,40 @@
 <script setup>
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router';
+import { login } from '../../api/login'
+import { Toast } from 'vant';
+import md5 from 'js-md5'
 const router = useRouter()
 const form = reactive({
-    username: '',
-    password: '',
-    captcha: ''
+    username: '13281331383',
+    password: '123456',
+    verify: ''
 })
 const onSubmit = () => {
-    router.push('/index')
+    let data = {
+        loginName:form.username,
+        passwordMd5:md5(form.password)
+    }
+    login(data).then((res) => {
+        if (res.data.resultCode == 200) {
+            Toast.success('登录成功');
+            router.push('/index')
+            localStorage.setItem('token',res.data.data)
+            console.log(localStorage.getItem('token'))
+        }
+        else {
+            Toast.fail('账号密码错误');
+        }
+    })
 }
-const register = () =>{
+const register = () => {
     router.push('/register')
 }
 
+const onClickLeft = () =>{
+    console.log(222)
+    router.go(-1)
+}
 </script>
 
 <style lang="less">
@@ -68,14 +88,14 @@ const register = () =>{
         width: 50%;
         margin-top: 30px;
     }
-    .van-field{
+    .van-field {
         margin: 20px 0;
     }
-    .register{
+    .register {
         margin: 20px;
         font-size: 14px;
         text-align: left;
-        color: #6389FA;
+        color: #6389fa;
     }
 }
 </style>

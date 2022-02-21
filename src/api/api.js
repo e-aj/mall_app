@@ -1,10 +1,17 @@
 import axios from "axios";
+// axios.defaults.baseURL = 'http://backend-api-01.newbee.ltd/api/v1/';
+import {Toast} from 'vant'
+
 axios.defaults.baseURL = 'http://backend-api-01.newbee.ltd/api/v1/';
+axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
+axios.defaults.headers['token'] = localStorage.getItem('token') || ''
+axios.defaults.headers.post['Content-Type'] = 'application/json'
+
 const instance = axios.create({
-  timeout: 25000,
+  timeout: 5000
 });
 
-// 请求拦截
+// 请求拦截'
 instance.interceptors.request.use(
   (config) => {
     return config;

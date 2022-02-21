@@ -1,10 +1,10 @@
 <template>
-  <div class="register">
-      <van-nav-bar title="注册" left-text left-arrow @click-left="onClickLeft" />
-       <van-form @submit="onSubmit">
+    <div class="register">
+        <van-nav-bar title="注册" left-text left-arrow @click-left="onClickLeft" />
+        <van-form @submit="onSubmit">
             <van-cell-group inset>
                 <van-field
-                    v-model="form.username"
+                    v-model="form.loginName"
                     name="用户名"
                     label="用户名"
                     placeholder="用户名"
@@ -35,9 +35,8 @@
                     :rules="[{ required: true, message: '请输入验证码' }]"
                 >
                     <div>
-                        <img src="" alt="">
+                        <img src alt />
                     </div>
-                
                 </van-field>
             </van-cell-group>
 
@@ -45,23 +44,48 @@
                 <van-button round block type="primary" native-type="submit" color="#1BAEAE">注册</van-button>
             </div>
         </van-form>
-  </div>
+    </div>
 </template>
 
 <script setup>
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router';
+import { register } from '../../api/login'
+import {Toast} from 'vant'
 const router = useRouter()
 const form = reactive({
-    username: '',
-    password: '',
+    loginName: '13281331383',
+    password: '123456',
     captcha: ''
 })
 const onSubmit = () => {
-    router.push('/index')
+    let data = {
+        loginName: form.loginName,
+        password: form.password
+    }
+    register(data).then(res => {
+        if (res.data.resultCode == 200) {
+            Toast.success('注册成功');
+            router.push('/login')
+        }
+        else if (res.data.resultCode == 500) {
+            Toast.fail('用户名已存在');
+        }
+        else {
+            Toast.fail('注册失败');
+        }
+
+    })
+
+}
+const onClickLeft = () => {
+    console.log(222)
+    router.go(-1)
 }
 </script>
 
-<style>
-
+<style lang="less" scoped>
+.van-form {
+    margin-top: 50px;
+}
 </style>

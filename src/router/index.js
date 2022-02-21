@@ -15,17 +15,17 @@ const routes = [
             {
                 path: '/class',
                 name: 'class',
-                component: import('../views/Class/index.vue')
+                component: import('../views/Class/class.vue')
             },
             {
                 path: '/shop',
                 name: 'shop',
-                component: import('../views/Shop/index.vue')
+                component: import('../views/Shop/shop.vue')
             },
             {
                 path: '/mine',
                 name: 'mine',
-                component: import('../views/Mine/index.vue')
+                component: import('../views/Mine/mine.vue')
             },
         ]
     },
@@ -38,6 +38,16 @@ const routes = [
         path:'/register',
         name:'register',
         component:import("../views/Login/register.vue")
+    },
+    {
+        path:'/search',
+        name:'search',
+        component:import('../views/Index/search.vue')
+    },
+    {
+        path:'/account',
+        name:'account',
+        component:import('../views/Mine/account.vue')
     }
 ]
 

@@ -53,9 +53,12 @@ export default ({ command, mode }) =>{
 			outDir: process.env.VITE_OUTPUT_DIR,
 			proxy: {
 			  '/api': {
-				target: 'http://api网关所在域名',
+				// target: 'http://api网关所在域名',
+				target:'http://backend-api-01.newbee.ltd/api',
 				changeOrigin: true,
-				rewrite: (path) => path.replace(/^\/api/, '')
+				pathRewrite: {
+                    '^/api': ''
+                }
 			  },
 			}
 		},

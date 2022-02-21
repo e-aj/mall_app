@@ -2,13 +2,13 @@
   <div class="index">
     <!-- head -->
     <div class="head" :class="{ 'active': state.headerScroll }">
-      <van-icon name="wap-nav" :color="state.icon_color" class="kind" />
+      <van-icon name="wap-nav" :color="state.icon_color" class="kind" @click="toClass" />
       <div class="search">
         <div class="first">XX商城</div>
         <div class="second"></div>
-        <div class="third">山河无恙，人间皆安</div>
+        <div class="third" @click="toSearch">山河无恙，人间皆安</div>
       </div>
-      <van-icon name="manager" :color="state.icon_color" />
+      <van-icon name="manager" :color="state.icon_color" @click="toMine" />
     </div>
     <!-- swiper -->
     <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" ref="el">
@@ -61,9 +61,14 @@
 
 
 <script setup>
-import { onMounted, onUnmounted, reactive, ref, nextTick } from "vue";
+import { reactive, nextTick } from "vue";
+import { useRouter } from "vue-router";
 import { getHome } from '../../api/index'
 
+// 定义router
+const router = useRouter()
+
+// 定义变量
 const state = reactive({
   swipeList: [],
   categoryList: [
@@ -113,8 +118,9 @@ const state = reactive({
   hotGoodses: [],
   recommendGoodses: [],
   headerScroll: false,
-  icon_color:'#1baeae'
+  icon_color: '#1baeae'
 })
+// 获取首页信息
 getHome().then(res => {
   console.log(res)
   state.swipeList = res.data.data.carousels
@@ -123,8 +129,7 @@ getHome().then(res => {
     state.recommendGoodses = res.data.data.recommendGoodses
 })
 
-const el = ref(null)
-
+// 刷新head
 nextTick(() => {
   window.addEventListener('scroll', () => {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -134,6 +139,19 @@ nextTick(() => {
   })
 })
 
+// 跳转分类
+const toClass = () => {
+  router.push('class')
+}
+// 跳转我的
+const toMine = () => {
+  router.push('mine')
+}
+
+// 去搜索
+const toSearch = () => {
+  router.push('search')
+}
 </script>
 
 <style lang="less">

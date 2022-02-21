@@ -12,7 +12,14 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router';
+const router = useRouter()
 const active = ref(0)
+
+// 左侧返回按钮
+const onClickLeft = () =>{
+  router.go(-1)
+}
 </script>
 
 <style>

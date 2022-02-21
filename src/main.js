@@ -3,7 +3,7 @@ import App from './App.vue'
 import './common/styles/reset.css'
 import './common/styles/base.less'
 import router from './router'
-import { Button,Tabbar, TabbarItem,Icon,NavBar,Form, Field, CellGroup,Swipe, SwipeItem,Toast,Grid, GridItem,Sidebar, SidebarItem    } from 'vant';
+import { Button, Tabbar, TabbarItem, Icon, NavBar, Form, Field, CellGroup, Swipe, SwipeItem, Toast, Grid, GridItem, Sidebar, SidebarItem, Search, Tab, Tabs,Image as VanImage } from 'vant';
 
 const app = createApp(App)
 app.use(Button)
@@ -21,4 +21,8 @@ app.use(Grid);
 app.use(GridItem);
 app.use(Sidebar);
 app.use(SidebarItem);
+app.use(Search);
+app.use(Tab);
+app.use(Tabs);
+app.use(VanImage);
 app.use(router).mount('#app')
