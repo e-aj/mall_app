@@ -1,6 +1,6 @@
 <template>
-    <div class="order">
-        <van-nav-bar title="订单管理"  left-arrow @click-left="onClickLeft" />
+    <div class="about">
+        <van-nav-bar title="关于我们"  left-arrow @click-left="onClickLeft" />
         <van-tabs v-model:active="active" color="#1baeae" title-active-color="#1baeae">
             <van-tab :title="item" v-for="(item,index) in state.tabList" :key="index">{{item}}</van-tab>
         </van-tabs>
@@ -29,8 +29,6 @@ const state = reactive({
         font-size: 13px;
         margin: 2px 0 0;
         color: #999;
-        
     }
-    
 }
 </style>

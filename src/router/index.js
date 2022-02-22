@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory,createWebHistory } from 'vue-router'
+import { Toast } from 'vant'
 
 const routes = [
     {
@@ -48,6 +49,26 @@ const routes = [
         path:'/account',
         name:'account',
         component:import('../views/Mine/account.vue')
+    },
+    {
+        path:'/order',
+        name:'order',
+        component:import('../views/Mine/order.vue')
+    },
+    {
+        path:'/address',
+        name:'address',
+        component:import('../views/Mine/address.vue')
+    },
+    {
+        path:'/about',
+        name:'about',
+        component:import('../views/Mine/about.vue')
+    },
+    {
+        path:'/addressDetails',
+        name:'addressDetails',
+        component:import('../views/Mine/addressDetails.vue')
     }
 ]
 
@@ -56,5 +77,13 @@ const router = createRouter({
     linkActiveClass: 'active',
     routes
 })
+
+// router.beforeEach((to, from,next) =>{
+//     if(localStorage.getItem('token')){
+//         Toast.fail('账号未登录')
+//         router.push('login')
+//     }
+//     next()
+// })
 
 export default router

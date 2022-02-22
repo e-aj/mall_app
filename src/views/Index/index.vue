@@ -154,7 +154,7 @@ const toSearch = () => {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .index {
   .head {
     position: fixed;

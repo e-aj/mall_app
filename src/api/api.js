@@ -1,10 +1,9 @@
 import axios from "axios";
-// axios.defaults.baseURL = 'http://backend-api-01.newbee.ltd/api/v1/';
 import {Toast} from 'vant'
 
 axios.defaults.baseURL = 'http://backend-api-01.newbee.ltd/api/v1/';
 axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
-axios.defaults.headers['token'] = localStorage.getItem('token') || ''
+axios.defaults.headers['token'] = localStorage.getItem('token')||""
 axios.defaults.headers.post['Content-Type'] = 'application/json'
 
 const instance = axios.create({
@@ -14,6 +13,7 @@ const instance = axios.create({
 // 请求拦截'
 instance.interceptors.request.use(
   (config) => {
+    config.headers['token'] = localStorage.getItem('token')
     return config;
 
   },
@@ -37,6 +37,7 @@ instance.interceptors.response.use(
     return Promise.reject(error.response);
   }
 );
+
 
 export default instance;
 

@@ -65,7 +65,6 @@ const onSubmit = () => {
             Toast.success('登录成功');
             router.push('/index')
             localStorage.setItem('token',res.data.data)
-            console.log(localStorage.getItem('token'))
         }
         else {
             Toast.fail('账号密码错误');
@@ -82,7 +81,7 @@ const onClickLeft = () =>{
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .login {
     .logo {
         width: 50%;

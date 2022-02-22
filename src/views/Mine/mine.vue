@@ -15,19 +15,19 @@
     </div>
     <div class="list">
       <ul>
-        <li>
+        <li @click="toOrder">
           我的订单
           <van-icon name="arrow" />
         </li>
-        <li>
+        <li @click="toAccount">
           账号管理
           <van-icon name="arrow" />
         </li>
-        <li>
+        <li @click="toAddress">
           地址管理
           <van-icon name="arrow" />
         </li>
-        <li>
+        <li @click="toAboutUs">
           关于我们
           <van-icon name="arrow" />
         </li>
@@ -39,7 +39,7 @@
 <script setup>
 import { useRouter } from 'vue-router';
 import { getInfo } from '../../api/user';
-import { reactive,onUnmounted,onMounted} from 'vue';
+import { reactive, onUnmounted, onMounted } from 'vue';
 import { Toast } from 'vant';
 const router = useRouter()
 
@@ -62,12 +62,12 @@ onMounted(() => {
       userInfo.nickName = res.data.data.nickName
       userInfo.introduceSign = res.data.data.introduceSign
     }
-    else{
+    else {
       Toast.fail('无效认证！请重新登录！');
       localStorage.clear();
-      setTimeout(()=>{
+      setTimeout(() => {
         router.push('login')
-      },2000)
+      }, 2000)
     }
 
   })
@@ -76,6 +76,25 @@ onUnmounted(() => {
   clearTimeout()
 })
 
+// 我的订单
+const toOrder = () =>{
+  router.push({name:'order'})
+}
+
+// 账号管理
+const toAccount = () => {
+  router.push({ name: 'account', params: { nickName: userInfo.nickName, introduceSign: userInfo.introduceSign } })
+}
+
+// 地址管理
+const toAddress = () => {
+  router.push({name:'address'})
+}
+
+// 关于我们
+const toAboutUs = () => {
+  router.push({name:'about'})
+}
 </script>
 
 <style lang="less">
@@ -83,7 +102,7 @@ onUnmounted(() => {
   .info {
     width: 90%;
     height: 120px;
-    background-color: #46c2c2;
+    background-color: #1baeae;
     border-radius: 10px;
     margin: 10px auto;
     display: flex;
