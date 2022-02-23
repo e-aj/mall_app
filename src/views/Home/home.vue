@@ -4,19 +4,19 @@
         <div class="nav">
             <ul>
                 <router-link to="/index"  class="link" >
-                    <van-icon name="wap-home-o" />
+                    <van-icon name="wap-home"  size="20"/>
                     <span>首页</span>
                 </router-link>
                 <router-link to="/class" class="link">
-                    <van-icon name="wap-home-o" />
+                    <van-icon name="coupon" size="20"/>
                     <span>分类</span>
                 </router-link>
                 <router-link to="/shop" class="link">
-                    <van-icon name="wap-home-o" />
+                    <van-icon name="shopping-cart" size="20"/>
                     <span>购物车</span>
                 </router-link>
                 <router-link to="/mine" class="link">
-                    <van-icon name="wap-home-o" />
+                    <van-icon name="manager" size="20"/>
                     <span>我的</span>
                 </router-link>
             </ul>

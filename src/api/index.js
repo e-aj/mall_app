@@ -6,3 +6,9 @@ export function getHome(){
         url:  '/index-infos',
     })
 }
+export function getProductDetails(id){
+    return request({
+        method:'get',
+        url:`goods/detail/${id}`
+    })
+}

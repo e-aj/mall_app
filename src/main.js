@@ -5,7 +5,8 @@ import './common/styles/base.less'
 import router from './router'
 import { Button, Tabbar, TabbarItem, Icon, NavBar, Form, Field, CellGroup, 
     Swipe, SwipeItem, Toast, Grid, GridItem, Sidebar, SidebarItem, Search, 
-    Tab, Tabs,Image as VanImage ,Divider,Area ,Switch,Cell,Tag  } from 'vant';
+    Tab, Tabs,Image as VanImage ,Divider,Area ,Switch,Cell,Tag,
+    ActionBar, ActionBarIcon, ActionBarButton,SubmitBar,Card   } from 'vant';
 
 const app = createApp(App)
 app.use(Button)
@@ -32,4 +33,9 @@ app.use(Area);
 app.use(Switch);
 app.use(Cell);
 app.use(Tag);
+app.use(ActionBar);
+app.use(ActionBarIcon);
+app.use(ActionBarButton);
+app.use(SubmitBar);
+app.use(Card);
 app.use(router).mount('#app')

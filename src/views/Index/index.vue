@@ -18,7 +18,7 @@
     </van-swipe>
     <!-- category -->
     <van-grid column-num="5" :border="false" class="category">
-      <van-grid-item v-for="(item, index) in state.categoryList" :key="index">
+      <van-grid-item v-for="(item, index) in state.categoryList" :key="index"  >
         <img :src="item.imgUrl" alt />
         <p>{{ item.name }}</p>
       </van-grid-item>
@@ -27,7 +27,7 @@
     <div class="newGoodses goodses">
       <p>新品上线</p>
       <van-grid column-num="2" class="product">
-        <van-grid-item v-for="(item, index) in state.newGoodses" :key="index">
+        <van-grid-item v-for="(item, index) in state.newGoodses" :key="index"  @click="toProductDetails(item)">
           <img :src="item.goodsCoverImg" alt />
           <div class="name">{{ item.goodsName }}</div>
           <div class="price">￥{{ item.sellingPrice }}</div>
@@ -38,7 +38,7 @@
     <div class="hotGoodses goodses">
       <p>热门商品</p>
       <van-grid column-num="2" class="product">
-        <van-grid-item v-for="(item, index) in state.hotGoodses" :key="index">
+        <van-grid-item v-for="(item, index) in state.hotGoodses" :key="index"  @click="toProductDetails(item)">
           <img :src="item.goodsCoverImg" alt />
           <div class="name">{{ item.goodsName }}</div>
           <div class="price">￥{{ item.sellingPrice }}</div>
@@ -49,7 +49,7 @@
     <div class="recommendGoodses goodses">
       <p>最新推荐</p>
       <van-grid column-num="2" class="product">
-        <van-grid-item v-for="(item, index) in state.recommendGoodses" :key="index">
+        <van-grid-item v-for="(item, index) in state.recommendGoodses" :key="index"  @click="toProductDetails(item)">
           <img :src="item.goodsCoverImg" alt />
           <div class="name">{{ item.goodsName }}</div>
           <div class="price">￥{{ item.sellingPrice }}</div>
@@ -122,7 +122,6 @@ const state = reactive({
 })
 // 获取首页信息
 getHome().then(res => {
-  console.log(res)
   state.swipeList = res.data.data.carousels
   state.newGoodses = res.data.data.newGoodses,
     state.hotGoodses = res.data.data.hotGoodses,
@@ -135,7 +134,6 @@ nextTick(() => {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
     scrollTop > 100 ? state.headerScroll = true : state.headerScroll = false
     scrollTop > 100 ? state.icon_color = '#fff' : state.icon_color = '#1baeae'
-
   })
 })
 
@@ -151,6 +149,11 @@ const toMine = () => {
 // 去搜索
 const toSearch = () => {
   router.push('search')
+}
+
+// 跳转详情页
+const  toProductDetails = (item) =>{
+  router.push({name:'productDetails',params:{goodsId:item.goodsId}})
 }
 </script>
 
