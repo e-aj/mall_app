@@ -6,13 +6,14 @@
                 <div class="top">
                     <div class="name">{{ item.userName }}</div>
                     <div class="phone">{{ item.userPhone }}</div>
+                    <van-tag type="danger" round  v-show="item.defaultFlag">默认</van-tag>
                 </div>
                 <div
                     class="bottom"
                 >{{ item.provinceName }}&nbsp;{{ item.cityName }}&nbsp;{{ item.regionName }}&nbsp;{{ item.detailAddress }}</div>
             </div>
             <div class="right">
-                <van-icon name="edit" size="20" @click="edit"/>
+                <van-icon name="edit" size="20" @click="edit(item)" />
             </div>
         </div>
         <van-button round block type="primary" color="#1baeae" @click="addAddress">新增地址</van-button>
@@ -30,7 +31,7 @@ const onClickLeft = () => history.back();
 
 const active = ref(0);
 const state = reactive({
-    addressList: []
+    addressList: [],
 })
 
 onMounted(() => {
@@ -40,12 +41,18 @@ onMounted(() => {
 })
 
 // 修改信息
-const edit = (item)=>{
-    router.push({name:"addressDetails",params:{form:item,title:"修改信息"}})
+const edit = (item) => {
+    router.push({
+        name: "editAddress",
+        params: {
+            form: JSON.stringify(item),
+            title: "编辑信息"
+        }
+    })
 }
 
-const addAddress = ()=>{
-    router.push("addressDetails")
+const addAddress = () => {
+    router.push("addAddress")
 }
 
 </script>
@@ -67,7 +74,7 @@ const addAddress = ()=>{
                 }
             }
         }
-        .right{
+        .right {
             margin-right: 20px;
         }
     }

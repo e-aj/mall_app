@@ -21,10 +21,16 @@ export function getAddress(){
         url:'/address'
     })
 }
-export function putAddress(data){
+export function changeAddress(data,method){
     return request({
-        method:"put",
+        method:method,
         url:'/address',
         data:data
+    })
+}
+export function deleteAddress(id){
+    return request({
+        method:"delete",
+        url:`/address/${id}`,
     })
 }

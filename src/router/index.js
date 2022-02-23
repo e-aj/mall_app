@@ -66,9 +66,14 @@ const routes = [
         component:import('../views/Mine/about.vue')
     },
     {
-        path:'/addressDetails',
-        name:'addressDetails',
-        component:import('../views/Mine/addressDetails.vue')
+        path:'/editAddress',
+        name:'editAddress',
+        component:import('../views/Mine/editAddress.vue')
+    },
+    {
+        path:'/addAddress',
+        name:'addAddress',
+        component:import('../views/Mine/addAddress.vue')
     }
 ]
 
