@@ -148,7 +148,7 @@ const toMine = () => {
 
 // 去搜索
 const toSearch = () => {
-  router.push('search')
+  router.push('categoires')
 }
 
 // 跳转详情页

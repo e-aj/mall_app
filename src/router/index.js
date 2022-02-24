@@ -41,11 +41,6 @@ const routes = [
         component:import("../views/Login/register.vue")
     },
     {
-        path:'/search',
-        name:'search',
-        component:import('../views/Index/search.vue')
-    },
-    {
         path:'/productDetails',
         name:'productDetails',
         component:import('../views/Index/productDetails.vue')
@@ -79,6 +74,11 @@ const routes = [
         path:'/addAddress',
         name:'addAddress',
         component:import('../views/Mine/addAddress.vue')
+    },
+    {
+        path:'/categoires',
+        name:'categoires',
+        component:import('../views/Class/categoires.vue')
     }
 ]
 

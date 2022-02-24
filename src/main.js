@@ -6,7 +6,7 @@ import router from './router'
 import { Button, Tabbar, TabbarItem, Icon, NavBar, Form, Field, CellGroup, 
     Swipe, SwipeItem, Toast, Grid, GridItem, Sidebar, SidebarItem, Search, 
     Tab, Tabs,Image as VanImage ,Divider,Area ,Switch,Cell,Tag,
-    ActionBar, ActionBarIcon, ActionBarButton,SubmitBar,Card   } from 'vant';
+    ActionBar, ActionBarIcon, ActionBarButton,SubmitBar,Card,Stepper,Checkbox, CheckboxGroup   } from 'vant';
 
 const app = createApp(App)
 app.use(Button)
@@ -38,4 +38,7 @@ app.use(ActionBarIcon);
 app.use(ActionBarButton);
 app.use(SubmitBar);
 app.use(Card);
+app.use(Stepper);
+app.use(Checkbox);
+app.use(CheckboxGroup);
 app.use(router).mount('#app')
