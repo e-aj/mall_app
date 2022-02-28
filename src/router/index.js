@@ -79,6 +79,11 @@ const routes = [
         path:'/categoires',
         name:'categoires',
         component:import('../views/Class/categoires.vue')
+    },
+    {
+        path:'/sumbitOrder',
+        name:'sumbitOrder',
+        component:import('../views/Shop/submitOrder.vue')
     }
 ]
 

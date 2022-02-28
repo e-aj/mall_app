@@ -90,7 +90,7 @@ const search_btn = () => {
 
 // 查看详情
 const toProductDetails = (item) =>{
-    router.push({name:'productDetails',params:{goodsId:item.goodsId}})
+    router.push({name:'productDetails',params:{goodsId:item.goodsId,goodsCategoryId:state.goodsCategoryId}})
 }
 </script>
 

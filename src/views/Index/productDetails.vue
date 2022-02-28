@@ -3,10 +3,10 @@
         <van-nav-bar title="商品详情" left-arrow @click-left="onClickLeft" />
         <div class="content">
             <img :src="state.productDetails.goodsCoverImg" alt />
-            <p class="goodsName">{{state.productDetails.goodsName}}</p>
+            <p class="goodsName">{{ state.productDetails.goodsName }}</p>
             <!-- <p class="goodsIntro">{{state.productDetails.goodsIntro}}</p> -->
             <p class="youfei">免邮费&nbsp;顺丰快递</p>
-            <p class="sellingPrice">￥{{state.productDetails.sellingPrice}}</p>
+            <p class="sellingPrice">￥{{ state.productDetails.sellingPrice }}</p>
             <div class="list">
                 <ul>
                     <li class="first">概述</li>
@@ -20,7 +20,12 @@
         <van-action-bar>
             <van-action-bar-icon icon="chat-o" text="客服" />
             <van-action-bar-icon icon="cart-o" text="购物车" />
-            <van-action-bar-button color="#6AD7D7" type="warning" text="加入购物车" />
+            <van-action-bar-button
+                color="#6AD7D7"
+                type="warning"
+                text="加入购物车"
+                @click="addShopCart"
+            />
             <van-action-bar-button color="#0CB9B9" type="danger" text="立即购买" />
         </van-action-bar>
     </div>
@@ -29,63 +34,94 @@
 <script setup>
 import { useRoute } from 'vue-router';
 import { reactive } from 'vue';
-import { getProductDetails } from '../../api/index'
+import { getProductDetails, addShop_Cart } from '../../api/index'
+import router from '../../router';
+import { Toast } from 'vant';
 
-const onClickLeft = () => history.back();
+
 const route = useRoute()
 const state = reactive({
     productDetails: {},
-    goodsId: ''
+    goodsId: '',
+    goodsCategoryId: ''
 })
+
+const onClickLeft = () => {
+    router.go(-1)
+}
+
 state.goodsId = route.params.goodsId
-console.log(state.goodsId)
+state.goodsCategoryId = route.params.goodsCategoryId
 
 getProductDetails(state.goodsId).then(res => {
     console.log(res)
     state.productDetails = res.data.data
 })
 
+// 加入购物车
+
+const addShopCart = () => {
+    const data = {
+        goodsCount: 1,
+        goodsId: state.goodsId
+    }
+    console.log(data)
+    addShop_Cart(data).then(res => {
+        if(res.data.resultCode == 200){
+            Toast('已加入购物车')
+        }
+        if (res.data.resultCode == 500) {
+            Toast(res.data.message)
+            
+        } else {
+            Toast('添加失败')
+        }
+        
+        console.log(res)
+    })
+
+}
 
 </script>
 
 <style scoped lang="less">
 .productDetails {
-    .van-nav-bar{
+    .van-nav-bar {
         position: fixed;
         top: 0;
         width: 100%;
     }
     .content {
-         padding: 20px;
+        padding: 20px;
         text-align: left;
         img {
             width: 100%;
         }
-        p{
+        p {
             margin: 5px 0;
         }
-        .goodsName{
+        .goodsName {
             font-size: 18px;
             color: #000;
         }
-        .youfei{
+        .youfei {
             font-size: 14px;
             color: #999;
         }
-        .sellingPrice{
-            color: #FF0000;
+        .sellingPrice {
+            color: #ff0000;
             font-size: 22px;
         }
-        .list{
+        .list {
             text-align: center;
             font-size: 16px;
-            ul{
+            ul {
                 width: 100%;
-                li{
+                li {
                     width: 24%;
                     border-left: 1px solid #000;
                 }
-                .first{
+                .first {
                     border: none;
                 }
             }

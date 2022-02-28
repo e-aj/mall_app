@@ -2,7 +2,7 @@
     <div class="address">
         <van-nav-bar title="地址管理" left-arrow @click-left="onClickLeft" />
         <div v-for="(item, index) in state.addressList" :key="index" class="addressList">
-            <div class="left">
+            <div class="left" @click="toOrder(item)">
                 <div class="top">
                     <div class="name">{{ item.userName }}</div>
                     <div class="phone">{{ item.userPhone }}</div>
@@ -23,15 +23,17 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue';
 import { getAddress } from '../../api/user';
-import { useRouter } from 'vue-router';
+import { useRouter,useRoute } from 'vue-router';
 
 const router = useRouter()
+const route = useRoute()
 
 const onClickLeft = () => history.back();
 
 const active = ref(0);
 const state = reactive({
     addressList: [],
+    resultList:[]
 })
 
 onMounted(() => {
@@ -55,6 +57,13 @@ const addAddress = () => {
     router.push("addAddress")
 }
 
+
+// 接收订单信息
+state.resultList = route.params.resultList
+
+const toOrder = (item)=>{
+    router.push({name:'sumbitOrder',params:{resultList:state.resultList,address:JSON.stringify(item)}})
+}
 </script>
 
 <style lang="less" scoped>

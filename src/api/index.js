@@ -12,3 +12,11 @@ export function getProductDetails(id){
         url:`goods/detail/${id}`
     })
 }
+
+export function addShop_Cart(data){
+    return request({
+        method:'post',
+        url:'shop-cart',
+        data:data
+    })
+}

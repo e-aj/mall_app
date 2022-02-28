@@ -63,7 +63,6 @@ const choose = (item, index) => {
 const toCategoires = (value) =>{
   console.log(value.categoryId)
   router.push({name:'categoires',params:{goodsCategoryId:value.categoryId}})
-
 }
 </script>
 
