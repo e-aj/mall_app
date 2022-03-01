@@ -19,7 +19,9 @@
         </div>
         <van-action-bar>
             <van-action-bar-icon icon="chat-o" text="客服" />
-            <van-action-bar-icon icon="cart-o" text="购物车" />
+            <van-badge :content="state.badge" @click="toShopCart">
+                <van-action-bar-icon icon="cart-o" text="购物车"  />
+            </van-badge>
             <van-action-bar-button
                 color="#6AD7D7"
                 type="warning"
@@ -35,6 +37,7 @@
 import { useRoute } from 'vue-router';
 import { reactive } from 'vue';
 import { getProductDetails, addShop_Cart } from '../../api/index'
+import { getShopCar } from '../../api/shop'
 import router from '../../router';
 import { Toast } from 'vant';
 
@@ -43,12 +46,17 @@ const route = useRoute()
 const state = reactive({
     productDetails: {},
     goodsId: '',
-    goodsCategoryId: ''
+    goodsCategoryId: '',
+    badge: 0
 })
 
 const onClickLeft = () => {
     router.go(-1)
 }
+
+getShopCar().then(res => {
+    state.badge = res.data.data.length
+})
 
 state.goodsId = route.params.goodsId
 state.goodsCategoryId = route.params.goodsCategoryId
@@ -67,19 +75,23 @@ const addShopCart = () => {
     }
     console.log(data)
     addShop_Cart(data).then(res => {
-        if(res.data.resultCode == 200){
+        if (res.data.resultCode == 200) {
             Toast('已加入购物车')
         }
         if (res.data.resultCode == 500) {
             Toast(res.data.message)
-            
+
         } else {
             Toast('添加失败')
         }
-        
+
         console.log(res)
     })
 
+}
+
+const toShopCart = () => {
+    router.push('shop')
 }
 
 </script>

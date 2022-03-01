@@ -10,7 +10,7 @@
             <div
                 class="address"
             >{{ state.address.provinceName }} {{ state.address.cityName }} {{ state.address.regionName }} {{ state.address.detailAddress }}</div>
-            <van-icon class="arrow" name="arrow" />
+            <van-icon class="arrow" name="arrow" @click="toEdit" />
         </div>
         <div class="contentList" v-for="(item, index) in state.goodsInfo" :key="index">
             <div class="img_">
@@ -29,29 +29,42 @@
         <div class="submit">
             <div class="top">
                 <div>商品金额</div>
-                <div class="total">${{ state.total}}</div>
+                <div class="total">￥{{ state.total }}</div>
             </div>
             <div class="btn" @click="submitOrder">生成订单</div>
         </div>
     </div>
+    <van-popup
+        v-model:show="state.popupShow"
+        position="bottom"
+        :style="{ height: '20%' }"
+        class="popup"
+    >
+        <van-icon name="cross" @click="closePopup"/>
+        <div class="weixin" @click="weixinPay">微信支付</div>
+        <div class="zhifubao" @click="zhifubaoPay">支付宝支付</div>
+    </van-popup>
 </template>
 <script setup>
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { getGoodsInfo, saveOrder } from '../../api/shop';
-import { reactive } from 'vue';
+import { onUnmounted, reactive } from 'vue';
+import { Toast } from 'vant';
 
 const state = reactive({
     goodsInfo: [],
     total: 0,
-    address: []
+    address: [],
+    popupShow: false
 })
 const onClickLeft = () => history.back()
 const route = useRoute()
+const router = useRouter()
+
 const address = JSON.parse(localStorage.getItem('address'))
 state.address = address
 const resultList = JSON.parse(localStorage.getItem('resultList'))
 state.total = localStorage.getItem('total')
-console.log(state.total)
 
 // 获取订单商品信息
 resultList.forEach(item => {
@@ -71,14 +84,49 @@ const data = {
 }
 
 const submitOrder = () => {
-    console.log(111)
     saveOrder(data).then(res => {
-        console.log(res)
+        if(res.data.resultCode == 200){
+            state.popupShow = true
+        }
     })
 }
 
+// toEdit修改地址
+const toEdit = () => {
+    router.push({
+        name: "editAddress",
+        params: {
+            form: JSON.stringify(state.address),
+            title: "编辑信息"
+        }
+    })
+}
 
+// 关闭弹窗
+const closePopup = () =>{
+    state.popupShow = false
+}
 
+// 微信支付
+const weixinPay = () =>{
+    Toast('支付成功')
+    setTimeout(() => {
+         router.push('order')
+     }, 100);
+}
+
+// 支付宝支付
+const zhifubaoPay = () =>{
+     Toast('支付成功')
+     setTimeout(() => {
+         router.push('order')
+     }, 100);
+     
+}
+
+onUnmounted(()=>{
+    clearTimeout()
+})
 </script>
 
 <style scoped lang="less">
@@ -189,6 +237,26 @@ const submitOrder = () => {
         height: 45px;
         line-height: 45px;
         color: #fff;
+    }
+}
+.popup {
+    .van-icon{
+        margin:5px 0 5px 85%;
+    }
+    
+    div{
+        width: 90%;
+        margin: 10px auto;
+        height: 30px;
+        line-height: 30px;
+        color: #fff;
+        font-size: 16px;
+    }
+    .weixin{
+        background: #4FC08D;
+    }
+    .zhifubao{
+        background: #1989FA;
     }
 }
 </style>

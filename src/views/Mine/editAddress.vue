@@ -119,6 +119,7 @@ const onSubmit = () => {
     changeAddress(state.formData,'put').then(res => {
         if (res.data.resultCode == 200) {
             Toast.success('保存成功')
+            localStorage.setItem('address',JSON.stringify(state.formData))
             setTimeout(() => {
                 history.back();
             }, 1000)

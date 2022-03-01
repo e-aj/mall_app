@@ -34,3 +34,9 @@ export function deleteAddress(id){
         url:`/address/${id}`,
     })
 }
+export function getOrder(pageNumber,status){
+    return request({
+        method:'get',
+        url:`order?pageNumber=${pageNumber}&status=${status}`
+    })
+}

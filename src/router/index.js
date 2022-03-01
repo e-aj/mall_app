@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory,createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import { Toast } from 'vant'
 
 const routes = [
@@ -36,69 +36,73 @@ const routes = [
         component: import('../views/Login/login.vue')
     },
     {
-        path:'/register',
-        name:'register',
-        component:import("../views/Login/register.vue")
+        path: '/register',
+        name: 'register',
+        component: import("../views/Login/register.vue")
     },
     {
-        path:'/productDetails',
-        name:'productDetails',
-        component:import('../views/Index/productDetails.vue')
+        path: '/productDetails',
+        name: 'productDetails',
+        component: import('../views/Index/productDetails.vue')
     },
     {
-        path:'/account',
-        name:'account',
-        component:import('../views/Mine/account.vue')
+        path: '/account',
+        name: 'account',
+        component: import('../views/Mine/account.vue')
     },
     {
-        path:'/order',
-        name:'order',
-        component:import('../views/Mine/order.vue')
+        path: '/order',
+        name: 'order',
+        component: import('../views/Mine/order.vue')
     },
     {
-        path:'/address',
-        name:'address',
-        component:import('../views/Mine/address.vue')
+        path: '/address',
+        name: 'address',
+        component: import('../views/Mine/address.vue')
     },
     {
-        path:'/about',
-        name:'about',
-        component:import('../views/Mine/about.vue')
+        path: '/about',
+        name: 'about',
+        component: import('../views/Mine/about.vue')
     },
     {
-        path:'/editAddress',
-        name:'editAddress',
-        component:import('../views/Mine/editAddress.vue')
+        path: '/editAddress',
+        name: 'editAddress',
+        component: import('../views/Mine/editAddress.vue')
     },
     {
-        path:'/addAddress',
-        name:'addAddress',
-        component:import('../views/Mine/addAddress.vue')
+        path: '/addAddress',
+        name: 'addAddress',
+        component: import('../views/Mine/addAddress.vue')
     },
     {
-        path:'/categoires',
-        name:'categoires',
-        component:import('../views/Class/categoires.vue')
+        path: '/categoires',
+        name: 'categoires',
+        component: import('../views/Class/categoires.vue')
     },
     {
-        path:'/sumbitOrder',
-        name:'sumbitOrder',
-        component:import('../views/Shop/submitOrder.vue')
+        path: '/sumbitOrder',
+        name: 'sumbitOrder',
+        component: import('../views/Shop/submitOrder.vue')
     }
 ]
 
 const router = createRouter({
-    history:createWebHistory(),
+    history: createWebHistory(),
     linkActiveClass: 'active',
     routes
 })
 
-// router.beforeEach((to, from,next) =>{
-//     if(localStorage.getItem('token')){
-//         Toast.fail('账号未登录')
-//         router.push('login')
-//     }
-//     next()
-// })
 
+router.beforeEach((to, form, next) => {
+    const token = localStorage.getItem('token')
+    if (!token && to.name !== 'login') {
+        Toast.fail('账号未登录')
+        next({
+            name: 'login'
+        })
+    } else {
+        next()
+    }
+})
 export default router
