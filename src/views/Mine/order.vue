@@ -1,15 +1,15 @@
 <template>
     <div class="order">
         <van-nav-bar title="订单管理" left-arrow @click-left="onClickLeft" />
-        <ul>
+        <!-- <ul>
             <li v-for="(item, index) in state.navList" :key="index" @click="checkNav(item)">{{item.title}}</li>
-        </ul>
-        <!-- <van-tabs v-model:active="active" color="#1baeae" title-active-color="#1baeae">
+        </ul> -->
+        <van-tabs v-model:active="activeName" color="#1baeae" title-active-color="#1baeae" @click-tab="checkNav">
             <van-tab
                 :title="item.title"
                 v-for="(item, index) in state.navList"
                 :key="index"
-                @click="checkNav(item)"
+                :name="item.status"
             >
                 <van-pull-refresh v-model="loading" @refresh="onRefresh">
                     <div
@@ -44,7 +44,7 @@
                     </div>
                 </van-pull-refresh>
             </van-tab>
-        </van-tabs> -->
+        </van-tabs>
         <van-divider />
         <p>没有更多了</p>
     </div>
@@ -54,7 +54,7 @@ import { reactive, ref } from 'vue';
 import { getOrder } from '../../api/user';
 
 const onClickLeft = () => history.back();
-const active = ref(0);
+const activeName = ref(' ');
 const loading = ref(false);
 const state = reactive({
     tabList: [
@@ -75,13 +75,13 @@ const state = reactive({
         },
         {
             title: "代发货",
-            status: '2'
-        }, {
-            title: "已发货",
             status: '3'
         }, {
-            title: "交易完成",
+            title: "已发货",
             status: '4'
+        }, {
+            title: "交易完成",
+            status: '5'
         }
     ],
     contentList: [],
@@ -95,7 +95,7 @@ getOrder(state.pageNumber, state.status).then(res => {
 // 切换
 const checkNav = (item) => {
     console.log(item)
-    state.status = item.status
+    state.status = item.name
     getOrder(state.pageNumber, state.status).then(res => {
         state.contentList = res.data.data.list
     })
