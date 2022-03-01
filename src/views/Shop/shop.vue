@@ -112,7 +112,9 @@ const total = computed(()=>{
   _list.forEach(item=>{
     sum += item.goodsCount * item.sellingPrice
   })
+  localStorage.setItem('total',sum)
   return sum
+   
 })
 
 // 结算
@@ -120,7 +122,9 @@ const onSubmit = ()=>{
   if(state.result.length == 0){
     Toast('请选择商品进行结算')
   }else{
-  router.push({name:'address',params:{resultList:JSON.stringify(state.result)}}) 
+  router.push({name:'address'})
+  localStorage.setItem('resultList',JSON.stringify(state.result))
+ 
   }
   
 }

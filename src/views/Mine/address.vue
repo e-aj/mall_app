@@ -59,10 +59,12 @@ const addAddress = () => {
 
 
 // 接收订单信息
-state.resultList = route.params.resultList
+state.resultList = localStorage.getItem('resultList')
+
 
 const toOrder = (item)=>{
     router.push({name:'sumbitOrder',params:{resultList:state.resultList,address:JSON.stringify(item)}})
+    localStorage.setItem('address',JSON.stringify(item))
 }
 </script>
 

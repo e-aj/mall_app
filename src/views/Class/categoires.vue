@@ -13,10 +13,15 @@
                 :class="{ active: index == state.number }"
             >{{ item.title }}</li>
         </ul>
-        <div class="content" >
-            <div class="goodsList" v-for="(item, index) in state.goodsList" :key="index" @click="toProductDetails(item)">
+        <div class="content">
+            <div
+                class="goodsList"
+                v-for="(item, index) in state.goodsList"
+                :key="index"
+                @click="toProductDetails(item)"
+            >
                 <div class="left">
-                    <img :src="'http://backend-api-01.newbee.ltd/'+item.goodsCoverImg" alt />
+                    <img :src="'http://backend-api-01.newbee.ltd/' + item.goodsCoverImg" alt />
                 </div>
                 <div class="right">
                     <div class="name">{{ item.goodsName }}</div>
@@ -76,12 +81,11 @@ const getSearchGoods = (goodsCategoryId, keyword, orderBy) => {
     })
 }
 
-onMounted(() => {
-    // 获取商品种类id
-    state.goodsCategoryId = route.params.goodsCategoryId
-    console.log(state.goodsCategoryId)
-    getSearchGoods(state.goodsCategoryId, state.keyword, state.orderBy)
-})
+// 获取商品种类id
+state.goodsCategoryId = localStorage.getItem('goodsCategoryId')
+getSearchGoods(state.goodsCategoryId, state.keyword, state.orderBy)
+
+
 
 // 搜索
 const search_btn = () => {
@@ -89,8 +93,8 @@ const search_btn = () => {
 }
 
 // 查看详情
-const toProductDetails = (item) =>{
-    router.push({name:'productDetails',params:{goodsId:item.goodsId,goodsCategoryId:state.goodsCategoryId}})
+const toProductDetails = (item) => {
+    router.push({ name: 'productDetails', params: { goodsId: item.goodsId, goodsCategoryId: state.goodsCategoryId } })
 }
 </script>
 
@@ -138,7 +142,7 @@ const toProductDetails = (item) =>{
     }
     .content {
         .goodsList {
-            border-bottom: 1px solid #DCDCDC;
+            border-bottom: 1px solid #dcdcdc;
             div {
                 display: inline-block;
             }
@@ -162,9 +166,9 @@ const toProductDetails = (item) =>{
                 .intro {
                     width: 100%;
                     font-size: 14px;
-                    color: #999999
+                    color: #999999;
                 }
-                .price{
+                .price {
                     color: #1baeae;
                     font-size: 14px;
                 }
