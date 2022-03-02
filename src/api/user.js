@@ -40,3 +40,10 @@ export function getOrder(pageNumber,status){
         url:`order?pageNumber=${pageNumber}&status=${status}`
     })
 }
+
+export function getOrderDetails(orderNo){
+    return request({
+        method:'get',
+        url:`/order/${orderNo}`
+    })
+}

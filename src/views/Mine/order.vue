@@ -1,10 +1,12 @@
 <template>
     <div class="order">
         <van-nav-bar title="订单管理" left-arrow @click-left="onClickLeft" />
-        <!-- <ul>
-            <li v-for="(item, index) in state.navList" :key="index" @click="checkNav(item)">{{item.title}}</li>
-        </ul> -->
-        <van-tabs v-model:active="activeName" color="#1baeae" title-active-color="#1baeae" @click-tab="checkNav">
+        <van-tabs
+            v-model:active="activeName"
+            color="#1baeae"
+            title-active-color="#1baeae"
+            @click-tab="checkNav"
+        >
             <van-tab
                 :title="item.title"
                 v-for="(item, index) in state.navList"
@@ -16,6 +18,7 @@
                         v-for="(item, index) in state.contentList"
                         :key="index"
                         class="contentList"
+                        @click="toOrderDetails(item)"
                     >
                         <div class="top_">
                             <div class="time">订单时间：{{ item.createTime }}</div>
@@ -44,15 +47,16 @@
                     </div>
                 </van-pull-refresh>
             </van-tab>
+            <p>没有更多了</p>
         </van-tabs>
-        <van-divider />
-        <p>没有更多了</p>
     </div>
 </template>
 <script setup>
-import { reactive, ref } from 'vue';
+import { onUnmounted, reactive, ref } from 'vue';
 import { getOrder } from '../../api/user';
+import { useRouter } from 'vue-router';
 
+const router = useRouter()
 const onClickLeft = () => history.back();
 const activeName = ref(' ');
 const loading = ref(false);
@@ -70,7 +74,7 @@ const state = reactive({
             status: '1'
         },
         {
-            title:'代确认',
+            title: '代确认',
             status: '2'
         },
         {
@@ -94,7 +98,7 @@ getOrder(state.pageNumber, state.status).then(res => {
 
 // 切换
 const checkNav = (item) => {
-    console.log(item)
+    state.pageNumber = 1
     state.status = item.name
     getOrder(state.pageNumber, state.status).then(res => {
         state.contentList = res.data.data.list
@@ -115,6 +119,18 @@ const onRefresh = () => {
     }, 1000);
 };
 
+// 订单详情
+const toOrderDetails = (item) =>{
+    router.push({name:'orderDetails',params:{orderNo:item.orderNo}})
+}
+
+
+
+// 删除定时器
+onUnmounted(()=>{
+    clearTimeout()
+})
+
 
 
 </script>
@@ -122,66 +138,63 @@ const onRefresh = () => {
 .order {
     width: 100%;
     background: #fff;
-    ul{
+    .van-nav-bar {
+        position: fixed;
+        top: 0;
         width: 100%;
-        text-align: left;
-        li{
-            font-size: 14px;
-            text-align: center;
-            width: 20%;          
-        }
     }
-    .contentList {
-        width: 80%;
-        margin: 30px auto;
-        .top_ {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-        }
-        .bottom_ {
-            width: 100%;
-            .info {
-                width: 100%;
+    .van-tabs {
+        margin-top: 46px;
+        .contentList {
+            width: 80%;
+            margin: 20px auto;
+            .top_ {
                 display: flex;
-                align-items: center;
-                margin-top: 5px;
-                .img_ {
-                    width: 25%;
-                    img {
-                        width: 100%;
+                justify-content: space-between;
+                font-size: 12px;
+            }
+            .bottom_ {
+                width: 100%;
+                .info {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    margin-top: 5px;
+                    .img_ {
+                        width: 25%;
+                        img {
+                            width: 100%;
+                        }
                     }
-                }
-                .right {
-                    width: 70%;
-                    margin-left: 5%;
-                    text-align: left;
-                    .top {
-                        font-size: 12px;
-                    }
-                    .bottom {
-                        bottom: 0;
-                        margin-top: 20px;
-                        font-size: 14px;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        .count {
+                    .right {
+                        width: 70%;
+                        margin-left: 5%;
+                        text-align: left;
+                        .top {
                             font-size: 12px;
-                            color: #999;
+                        }
+                        .bottom {
+                            bottom: 0;
+                            margin-top: 20px;
+                            font-size: 14px;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            .count {
+                                font-size: 12px;
+                                color: #999;
+                            }
                         }
                     }
                 }
             }
         }
-    }
-    .van-divider {
-        margin: 5px 0 0;
-    }
-    p {
-        font-size: 13px;
-        margin: 2px 0 0;
-        color: #999;
+        p {
+            font-size: 13px;
+            margin: 20px 0 0;
+            line-height: 30px;
+            color: #999;
+        }
     }
 }
 </style>

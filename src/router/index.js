@@ -84,6 +84,16 @@ const routes = [
         path: '/sumbitOrder',
         name: 'sumbitOrder',
         component: import('../views/Shop/submitOrder.vue')
+    },
+    {
+        path: '/orderDetails',
+        name: 'orderDetails',
+        component: import('../views/Mine/orderDetails.vue')
+    },
+    {
+        path:'/imgVerify',
+        name:'imgVerify',
+        component:import('../components/imgVerify.vue')
     }
 ]
 

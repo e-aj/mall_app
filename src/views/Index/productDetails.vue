@@ -19,8 +19,8 @@
         </div>
         <van-action-bar>
             <van-action-bar-icon icon="chat-o" text="客服" />
-            <van-badge :content="state.badge" @click="toShopCart">
-                <van-action-bar-icon icon="cart-o" text="购物车"  />
+            <van-badge :content="state.badge" >
+                <van-action-bar-icon icon="cart-o" text="购物车" @click="toShopCart" />
             </van-badge>
             <van-action-bar-button
                 color="#6AD7D7"
@@ -78,7 +78,7 @@ const addShopCart = () => {
         if (res.data.resultCode == 200) {
             Toast('已加入购物车')
         }
-        if (res.data.resultCode == 500) {
+         else if(res.data.resultCode == 500) {
             Toast(res.data.message)
 
         } else {
@@ -91,7 +91,9 @@ const addShopCart = () => {
 }
 
 const toShopCart = () => {
+    console.log(111)
     router.push('shop')
+
 }
 
 </script>
