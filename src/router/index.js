@@ -91,9 +91,9 @@ const routes = [
         component: import('../views/Mine/orderDetails.vue')
     },
     {
-        path:'/imgVerify',
-        name:'imgVerify',
-        component:import('../components/imgVerify.vue')
+        path: '/imgVerify',
+        name: 'imgVerify',
+        component: import('../components/imgVerify.vue')
     }
 ]
 
@@ -106,11 +106,15 @@ const router = createRouter({
 
 router.beforeEach((to, form, next) => {
     const token = localStorage.getItem('token')
-    if (!token && to.name !== 'login') {
+    if (!token && to.name !== 'login' ) {
+        if(to.name == 'register'){
+            next()
+        }else{
         Toast.fail('账号未登录')
         next({
             name: 'login'
         })
+        }
     } else {
         next()
     }
